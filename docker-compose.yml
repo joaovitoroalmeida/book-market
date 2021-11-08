@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  mysqlsrv:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "bookmarketKT"
+      MYSQL_DATABASE: "bookmarket"
+    ports:
+      - "3306:3306"
+    volumes:
+      - spring_rest:/var/lib/mysql
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - mysql-compose-network
+
+networks:
+  mysql-compose-network:
+    driver: bridge
+
+volumes:
+  spring_rest:
