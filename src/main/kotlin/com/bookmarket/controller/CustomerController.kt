@@ -1,6 +1,7 @@
 package com.bookmarket.controller
 
 import com.bookmarket.controller.request.CustomerRequest
+import com.bookmarket.extension.toCustomerModel
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -27,7 +28,7 @@ class CustomerController (val customerService: CustomerService){
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createCustomer(@RequestBody customer: CustomerRequest) {
-        customerService.createCustomer(customer)
+        customerService.createCustomer(customer.toCustomerModel())
     }
 
     @GetMapping("{id}")
@@ -38,7 +39,7 @@ class CustomerController (val customerService: CustomerService){
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateCustomer(@PathVariable id: String, @RequestBody customer: CustomerRequest){
-        customerService.updateCustomer(id, customer)
+        customerService.updateCustomer(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("{id}")
