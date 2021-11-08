@@ -7,6 +7,6 @@ fun CustomerRequest.toCustomerModel(): CustomerModel{
     return CustomerModel(name = this.name, email = this.email)
 }
 
-fun CustomerRequest.toCustomerModel(id: String): CustomerModel{
+fun CustomerRequest.toCustomerModel(id: Int): CustomerModel{
     return CustomerModel(id = id, name = this.name, email = this.email)
 }

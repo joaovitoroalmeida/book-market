@@ -32,19 +32,19 @@ class CustomerController (val customerService: CustomerService){
     }
 
     @GetMapping("{id}")
-    fun getCustomer(@PathVariable id: String): CustomerModel {
+    fun getCustomer(@PathVariable id: Int): CustomerModel {
         return customerService.getCustomer(id)
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updateCustomer(@PathVariable id: String, @RequestBody customer: CustomerRequest){
+    fun updateCustomer(@PathVariable id: Int, @RequestBody customer: CustomerRequest){
         customerService.updateCustomer(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCustomer(@PathVariable id: String){
+    fun deleteCustomer(@PathVariable id: Int){
         customerService.deleteCustomer(id)
     }
 }
