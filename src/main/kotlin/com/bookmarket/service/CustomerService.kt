@@ -20,7 +20,7 @@ class CustomerService (val customerRepository: CustomerRepository){
         customerRepository.save(customer)
     }
 
-    fun getCustomer(id: Int): CustomerModel {
+    fun getCustomerById(id: Int): CustomerModel {
         return customerRepository.findById(id).get()
     }
 

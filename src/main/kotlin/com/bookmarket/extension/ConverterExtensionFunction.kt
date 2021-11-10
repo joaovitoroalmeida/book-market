@@ -1,6 +1,9 @@
 package com.bookmarket.extension
 
+import com.bookmarket.controller.request.BookRequest
 import com.bookmarket.controller.request.CustomerRequest
+import com.bookmarket.enums.BookStatus
+import com.bookmarket.model.BookModel
 import com.bookmarket.model.CustomerModel
 
 fun CustomerRequest.toCustomerModel(): CustomerModel{
@@ -9,4 +12,12 @@ fun CustomerRequest.toCustomerModel(): CustomerModel{
 
 fun CustomerRequest.toCustomerModel(id: Int): CustomerModel{
     return CustomerModel(id = id, name = this.name, email = this.email)
+}
+
+fun BookRequest.toBookModel(customer: CustomerModel): BookModel {
+    return BookModel(
+        name = this.name,
+        price = this.price,
+        status = BookStatus.ATIVO,
+        customer = customer)
 }
