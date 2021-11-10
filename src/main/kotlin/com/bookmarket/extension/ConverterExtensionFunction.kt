@@ -16,8 +16,17 @@ fun CustomerRequest.toCustomerModel(id: Int): CustomerModel{
 
 fun BookRequest.toBookModel(customer: CustomerModel): BookModel {
     return BookModel(
-        name = this.name,
-        price = this.price,
+        name = this.name!!,
+        price = this.price!!,
         status = BookStatus.ATIVO,
         customer = customer)
+}
+
+fun BookRequest.toBookModel(bookModel: BookModel): BookModel {
+    return BookModel(
+        id = bookModel.id,
+        name = this.name?: bookModel.name,
+        price = this.price?: bookModel.price,
+        status = bookModel.status,
+        customer = bookModel.customer)
 }
