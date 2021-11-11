@@ -1,11 +1,15 @@
 package com.bookmarket.service
 
+import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.reporsitory.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService (val customerRepository: CustomerRepository){
+class CustomerService (
+    val customerRepository: CustomerRepository,
+    val bookService: BookService
+    ){
 
     fun getAll(name: String?): List<CustomerModel> {
 
@@ -33,10 +37,9 @@ class CustomerService (val customerRepository: CustomerRepository){
     }
 
     fun deleteCustomer(id: Int){
-        if(!customerRepository.existsById(id)){
-            throw Exception()
-        }
-
-        customerRepository.deleteById(id)
+        val customer = getCustomerById(id)
+        bookService.deleteByCustomer(customer)
+        customer.status = CustomerStatus.INATIVO
+        customerRepository.save(customer)
     }
 }

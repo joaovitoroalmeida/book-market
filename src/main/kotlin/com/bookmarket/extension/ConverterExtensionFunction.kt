@@ -3,15 +3,16 @@ package com.bookmarket.extension
 import com.bookmarket.controller.request.BookRequest
 import com.bookmarket.controller.request.CustomerRequest
 import com.bookmarket.enums.BookStatus
+import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.model.BookModel
 import com.bookmarket.model.CustomerModel
 
 fun CustomerRequest.toCustomerModel(): CustomerModel{
-    return CustomerModel(name = this.name, email = this.email)
+    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
 }
 
-fun CustomerRequest.toCustomerModel(id: Int): CustomerModel{
-    return CustomerModel(id = id, name = this.name, email = this.email)
+fun CustomerRequest.toCustomerModel(customerSaved: CustomerModel): CustomerModel{
+    return CustomerModel(id = customerSaved.id, name = this.name, email = this.email, status = customerSaved.status)
 }
 
 fun BookRequest.toBookModel(customer: CustomerModel): BookModel {

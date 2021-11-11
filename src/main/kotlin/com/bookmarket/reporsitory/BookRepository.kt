@@ -2,8 +2,10 @@ package com.bookmarket.reporsitory
 
 import com.bookmarket.enums.BookStatus
 import com.bookmarket.model.BookModel
+import com.bookmarket.model.CustomerModel
 import org.springframework.data.repository.CrudRepository
 
 interface BookRepository : CrudRepository <BookModel, Int>{
     fun findByStatus(status: BookStatus): List<BookModel>
+    fun findByCustomer(customer: CustomerModel): List<BookModel>
 }
