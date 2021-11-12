@@ -1,8 +1,9 @@
 package com.bookmarket.controller
 
 import com.bookmarket.controller.request.BookRequest
+import com.bookmarket.controller.response.BookResponse
 import com.bookmarket.extension.toBookModel
-import com.bookmarket.model.BookModel
+import com.bookmarket.extension.toResponse
 import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -31,17 +32,17 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(): List<BookModel> =
-        bookService.findAll()
+    fun findAll(): List<BookResponse> =
+        bookService.findAll().map { it.toResponse() }
 
 
     @GetMapping("active")
-    fun findActivesBooks(): List<BookModel> =
-        bookService.findActives()
+    fun findActivesBooks(): List<BookResponse> =
+        bookService.findActives().map { it.toResponse() }
 
     @GetMapping("{id}")
-    fun findBookById(@PathVariable id: Int) : BookModel {
-       return bookService.findById(id)
+    fun findBookById(@PathVariable id: Int) : BookResponse {
+       return bookService.findById(id).toResponse()
     }
 
     @DeleteMapping("{id}")
