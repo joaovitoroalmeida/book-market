@@ -6,6 +6,9 @@ import com.bookmarket.extension.toBookModel
 import com.bookmarket.extension.toResponse
 import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -32,13 +35,13 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(): List<BookResponse> =
-        bookService.findAll().map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
+        bookService.findAll(pageable).map { it.toResponse() }
 
 
     @GetMapping("active")
-    fun findActivesBooks(): List<BookResponse> =
-        bookService.findActives().map { it.toResponse() }
+    fun findActivesBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
+        bookService.findActives(pageable).map { it.toResponse() }
 
     @GetMapping("{id}")
     fun findBookById(@PathVariable id: Int) : BookResponse {
