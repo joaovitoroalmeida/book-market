@@ -27,7 +27,7 @@ data class PurchaseModel (
     @JoinTable(name = "purchase_book",
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")])
-    var books: List<BookModel>,
+    var books: MutableList<BookModel>,
 
     @Column
     var nfe: String? = null,
@@ -36,5 +36,5 @@ data class PurchaseModel (
     var price: BigDecimal,
 
     @Column(name = "created_at")
-    var createdAt: LocalDateTime
+    var createdAt: LocalDateTime = LocalDateTime.now()
 )
