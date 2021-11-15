@@ -57,4 +57,8 @@ class BookService(
         books.map { it.status = BookStatus.VENDIDO }
         bookRepository.saveAll(books)
     }
+
+    fun findSoldBooksByCustomerId(id: Int, pageable: Pageable): Page<BookModel> {
+        return bookRepository.findBookByCustomerIdAndStatus(id, BookStatus.VENDIDO, pageable)
+    }
 }

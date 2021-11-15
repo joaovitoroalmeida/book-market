@@ -1,5 +1,6 @@
 package com.bookmarket.controller.request
 
+import com.bookmarket.validation.AvailableBooks
 import com.fasterxml.jackson.annotation.JsonAlias
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Positive
@@ -12,5 +13,6 @@ data class PurchaseRequest(
     val customerId: Int,
     @field:NotNull
     @JsonAlias("book_ids")
+    @AvailableBooks
     val bookIds: Set<Int>
 )
