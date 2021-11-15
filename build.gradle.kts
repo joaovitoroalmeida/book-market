@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.5.31"
 	kotlin("plugin.spring") version "1.5.31"
+	kotlin("plugin.jpa") version "1.5.31"
 }
 
 group = "com.bookmarket"
@@ -16,11 +17,28 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    //Spring Dependency
+	implementation("org.springframework.boot:spring-boot-starter-web:2.5.6")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.6")
+	implementation("org.springframework.boot:spring-boot-starter-validation:2.5.6")
+
+	//DB Dependency
+	runtimeOnly("mysql:mysql-connector-java:8.0.27")
+	implementation("org.flywaydb:flyway-core:8.0.3")
+
+	//Others Dependency
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
+
+	//Kotlin Dependency
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	//Documentation
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
+	implementation("io.springfox:springfox-swagger2:3.0.0")
+
+	//Tests Dependency
+	testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
 }
 
 tasks.withType<KotlinCompile> {
