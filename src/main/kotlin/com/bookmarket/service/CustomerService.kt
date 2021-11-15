@@ -3,11 +3,8 @@ package com.bookmarket.service
 import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.enums.Errors
 import com.bookmarket.exception.NotFoundException
-import com.bookmarket.model.BookModel
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.reporsitory.CustomerRepository
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -50,9 +47,5 @@ class CustomerService (
 
     fun emailAvailable(email: String): Boolean {
         return !customerRepository.existsByEmail(email)
-    }
-
-    fun findSoldBooks(id: Int, pageable: Pageable): Page<BookModel> {
-        return bookService.findSoldBooksByCustomerId(id, pageable)
     }
 }

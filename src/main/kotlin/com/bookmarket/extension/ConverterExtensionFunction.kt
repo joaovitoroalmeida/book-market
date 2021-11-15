@@ -4,10 +4,12 @@ import com.bookmarket.controller.request.BookRequest
 import com.bookmarket.controller.request.CustomerRequest
 import com.bookmarket.controller.response.BookResponse
 import com.bookmarket.controller.response.CustomerResponse
+import com.bookmarket.controller.response.PurchaseResponse
 import com.bookmarket.enums.BookStatus
 import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.model.BookModel
 import com.bookmarket.model.CustomerModel
+import com.bookmarket.model.PurchaseModel
 
 fun CustomerRequest.toCustomerModel(): CustomerModel{
     return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
@@ -50,5 +52,12 @@ fun BookModel.toResponse() : BookResponse {
         price = this.price,
         customer = this.customer?.toResponse(),
         status = this.status
+    )
+}
+
+fun PurchaseModel.toResponse(): PurchaseResponse {
+    return PurchaseResponse(
+        books = this.books.map { it.toResponse() }.toMutableList(),
+        price = this.price
     )
 }

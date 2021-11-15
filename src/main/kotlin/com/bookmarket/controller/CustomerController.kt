@@ -3,9 +3,12 @@ package com.bookmarket.controller
 import com.bookmarket.controller.request.CustomerRequest
 import com.bookmarket.controller.response.BookResponse
 import com.bookmarket.controller.response.CustomerResponse
+import com.bookmarket.controller.response.PurchaseResponse
 import com.bookmarket.extension.toCustomerModel
 import com.bookmarket.extension.toResponse
+import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
+import com.bookmarket.service.PurchaseService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -24,7 +27,11 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("customers")
-class CustomerController (val customerService: CustomerService){
+class CustomerController(
+    val customerService: CustomerService,
+    val bookService: BookService,
+    val purchaseService: PurchaseService
+    ){
 
     @GetMapping
     fun getAll(@RequestParam name: String?): List<CustomerResponse> {
@@ -44,7 +51,12 @@ class CustomerController (val customerService: CustomerService){
 
     @GetMapping("{id}/sold_books")
     fun findSoldBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<BookResponse> {
-        return customerService.findSoldBooks(id, pageable).map { it.toResponse() }
+        return bookService.findSoldBooksByCustomerId(id, pageable).map { it.toResponse() }
+    }
+
+    @GetMapping("{id}/purchased_books")
+    fun findPurchasedBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<PurchaseResponse> {
+        return purchaseService.findPurchasedBooksByCustomerId(id, pageable).map { it.toResponse() }
     }
 
     @PutMapping("{id}")
