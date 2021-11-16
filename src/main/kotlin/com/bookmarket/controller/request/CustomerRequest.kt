@@ -10,5 +10,6 @@ data class CustomerRequest (
     var name: String,
     @EmailAvailable
     @field:Email(message = "Email deve ser válido")
-    var email: String
+    var email: String,
+    var password: String
 )
