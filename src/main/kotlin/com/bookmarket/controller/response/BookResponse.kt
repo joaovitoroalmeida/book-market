@@ -4,9 +4,9 @@ import com.bookmarket.enums.BookStatus
 import java.math.BigDecimal
 
 data class BookResponse(
-    var id: Int? = null,
-    var name: String,
-    var price: BigDecimal,
-    var customer: CustomerResponse? = null,
-    var status: BookStatus? = null
+    val id: Int? = null,
+    val name: String,
+    val price: BigDecimal,
+    val customer: CustomerResponse? = null,
+    val status: BookStatus? = null
 )

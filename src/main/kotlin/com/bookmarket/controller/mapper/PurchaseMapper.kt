@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class PurchaseMapper(
-    val bookService: BookService,
-    val customerService: CustomerService
+    private val bookService: BookService,
+    private val customerService: CustomerService
 ) {
     fun toModel(request: PurchaseRequest): PurchaseModel {
         val customer = customerService.getCustomerById(request.customerId)

@@ -21,6 +21,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web:2.5.6")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.6")
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.5.6")
+	implementation("org.springframework.boot:spring-boot-starter-security:2.5.6")
 
 	//DB Dependency
 	runtimeOnly("mysql:mysql-connector-java:8.0.27")

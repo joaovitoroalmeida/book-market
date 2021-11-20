@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull
 data class BookRequest(
 
     @field:NotEmpty(message = "Nome deve ser informado")
-    var name : String?,
+    val name : String?,
     @field:NotNull(message = "Price deve ser informado")
-    var price: BigDecimal?,
+    val price: BigDecimal?,
 
     @JsonAlias("customer_id")
-    var customerId: Int
+    val customerId: Int
 )

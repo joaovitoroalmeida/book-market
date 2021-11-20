@@ -6,12 +6,14 @@ import com.bookmarket.enums.Profile
 import com.bookmarket.exception.NotFoundException
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.reporsitory.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService (
-    val customerRepository: CustomerRepository,
-    val bookService: BookService
+    private val customerRepository: CustomerRepository,
+    private val bookService: BookService,
+    private val bCrypt: BCrypt
     ){
 
     fun getAll(name: String?): List<CustomerModel> {

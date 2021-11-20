@@ -18,24 +18,24 @@ import javax.persistence.JoinColumn
 data class CustomerModel(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null,
+    val id: Int? = null,
 
     @Column
-    var name: String,
+    val name: String,
 
     @Column
-    var email: String,
+    val email: String,
 
     @Column
     @Enumerated(EnumType.STRING)
-    var status: CustomerStatus,
+    val status: CustomerStatus,
 
     @Column
-    var password: String,
+    val password: String,
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
-    var roles: Set<Profile> = setOf()
+    val roles: Set<Profile> = setOf()
 )
