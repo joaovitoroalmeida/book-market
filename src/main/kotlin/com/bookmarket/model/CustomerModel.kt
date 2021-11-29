@@ -1,7 +1,7 @@
 package com.bookmarket.model
 
 import com.bookmarket.enums.CustomerStatus
-import com.bookmarket.enums.Profile
+import com.bookmarket.enums.Role
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -28,14 +28,14 @@ data class CustomerModel(
 
     @Column
     @Enumerated(EnumType.STRING)
-    val status: CustomerStatus,
+    var status: CustomerStatus,
 
     @Column
     val password: String,
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
-    val roles: Set<Profile> = setOf()
+    val roles: Set<Role> = setOf()
 )
