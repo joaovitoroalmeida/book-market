@@ -17,24 +17,24 @@ data class PurchaseModel (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null,
+    val id: Int? = null,
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    var customer: CustomerModel,
+    val customer: CustomerModel,
 
     @ManyToMany
     @JoinTable(name = "purchase_book",
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")])
-    var books: MutableList<BookModel>,
+    val books: MutableList<BookModel>,
 
     @Column
-    var nfe: String? = null,
+    val nfe: String? = null,
 
     @Column
-    var price: BigDecimal,
+    val price: BigDecimal,
 
     @Column(name = "created_at")
-    var createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )

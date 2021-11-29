@@ -1,13 +1,13 @@
 package com.bookmarket.controller.response
 
 data class ErrorResponse(
-    var status: Int,
-    var message: String,
-    var internalCode: String,
-    var erros: List<FieldErrorResponse>?
+    val status: Int,
+    val message: String,
+    val internalCode: String,
+    val erros: List<FieldErrorResponse>?
 )
 
 data class FieldErrorResponse(
-    var message: String,
-    var field: String
+    val message: String,
+    val field: String
 )

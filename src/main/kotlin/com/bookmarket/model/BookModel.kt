@@ -17,17 +17,17 @@ import javax.persistence.ManyToOne
 data class BookModel(
     @Id
     @GeneratedValue
-    var id: Int? = null,
+    val id: Int? = null,
 
     @Column
-    var name: String,
+    val name: String,
 
     @Column
-    var price: BigDecimal,
+    val price: BigDecimal,
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    var customer: CustomerModel? = null
+    val customer: CustomerModel? = null
 ) {
 
     @Column

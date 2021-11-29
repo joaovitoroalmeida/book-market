@@ -2,15 +2,18 @@ package com.bookmarket.service
 
 import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.enums.Errors
+import com.bookmarket.enums.Role
 import com.bookmarket.exception.NotFoundException
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.reporsitory.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService (
-    val customerRepository: CustomerRepository,
-    val bookService: BookService
+    private val customerRepository: CustomerRepository,
+    private val bookService: BookService,
+    private val bCrypt: BCryptPasswordEncoder
     ){
 
     fun getAll(name: String?): List<CustomerModel> {
@@ -23,7 +26,11 @@ class CustomerService (
     }
 
     fun createCustomer(customer: CustomerModel) {
-        customerRepository.save(customer)
+        val customerWithRole = customer.copy(
+            roles = setOf(Role.CUSTOMER),
+            password = bCrypt.encode(customer.password)
+        )
+        customerRepository.save(customerWithRole)
     }
 
     fun getCustomerById(id: Int): CustomerModel {

@@ -5,7 +5,7 @@ import com.bookmarket.service.BookService
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-class AvailableBookValidator(val bookService: BookService): ConstraintValidator<AvailableBooks, Set<Int>> {
+class AvailableBookValidator(private val bookService: BookService): ConstraintValidator<AvailableBooks, Set<Int>> {
     override fun isValid(booksId: Set<Int>?, context: ConstraintValidatorContext?): Boolean {
         if(booksId.isNullOrEmpty())
             return false

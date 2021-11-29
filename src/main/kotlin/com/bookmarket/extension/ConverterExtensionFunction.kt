@@ -12,11 +12,20 @@ import com.bookmarket.model.CustomerModel
 import com.bookmarket.model.PurchaseModel
 
 fun CustomerRequest.toCustomerModel(): CustomerModel{
-    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
+    return CustomerModel(
+        name = this.name,
+        email = this.email,
+        status = CustomerStatus.ATIVO,
+        password = this.password)
 }
 
 fun CustomerRequest.toCustomerModel(customerSaved: CustomerModel): CustomerModel{
-    return CustomerModel(id = customerSaved.id, name = this.name, email = this.email, status = customerSaved.status)
+    return CustomerModel(
+        id = customerSaved.id,
+        name = this.name,
+        email = this.email,
+        status = customerSaved.status,
+        password = customerSaved.password)
 }
 
 fun BookRequest.toBookModel(customer: CustomerModel): BookModel {
