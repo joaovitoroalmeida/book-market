@@ -6,6 +6,7 @@ import com.bookmarket.controller.response.CustomerResponse
 import com.bookmarket.controller.response.PurchaseResponse
 import com.bookmarket.extension.toCustomerModel
 import com.bookmarket.extension.toResponse
+import com.bookmarket.security.UserCanOnlyAccessThenOwnResource
 import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
 import com.bookmarket.service.PurchaseService
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
+import org.springframework.security.access.prepost.PreAuthorize
 
 @RestController
 @RequestMapping("customers")
@@ -32,6 +34,10 @@ class CustomerController(
     private val bookService: BookService,
     private val purchaseService: PurchaseService
     ){
+
+    companion object {
+        const val CONDITION_AUTHORIZE = "hasRole('ROLE_ADMIN') || #id == authentication.principal.id" //Example const code
+    }
 
     @GetMapping
     fun getAll(@RequestParam name: String?): List<CustomerResponse> {
@@ -45,22 +51,26 @@ class CustomerController(
     }
 
     @GetMapping("{id}")
+    @UserCanOnlyAccessThenOwnResource
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
         return customerService.getCustomerById(id).toResponse()
     }
 
     @GetMapping("{id}/sold_books")
+    @PreAuthorize(CONDITION_AUTHORIZE)
     fun findSoldBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<BookResponse> {
         return bookService.findSoldBooksByCustomerId(id, pageable).map { it.toResponse() }
     }
 
     @GetMapping("{id}/purchased_books")
+    @PreAuthorize(CONDITION_AUTHORIZE)
     fun findPurchasedBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<PurchaseResponse> {
         return purchaseService.findPurchasedBooksByCustomerId(id, pageable).map { it.toResponse() }
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize(CONDITION_AUTHORIZE)
     fun updateCustomer(@PathVariable id: Int, @RequestBody @Valid customer: CustomerRequest){
         val customerSaved = customerService.getCustomerById(id)
         customerService.updateCustomer(customer.toCustomerModel(customerSaved))
@@ -68,6 +78,7 @@ class CustomerController(
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UserCanOnlyAccessThenOwnResource
     fun deleteCustomer(@PathVariable id: Int){
         customerService.deleteCustomer(id)
     }
