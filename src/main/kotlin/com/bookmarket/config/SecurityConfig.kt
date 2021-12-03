@@ -4,6 +4,7 @@ import com.bookmarket.enums.Role
 import com.bookmarket.reporsitory.CustomerRepository
 import com.bookmarket.security.AuthenticationFilter
 import com.bookmarket.security.AuthorizationFilter
+import com.bookmarket.security.CustomAuthenticationEntryPoint
 import com.bookmarket.security.JwtUtil
 import com.bookmarket.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -25,6 +26,7 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
+    private val customAuthentication : CustomAuthenticationEntryPoint,
     private val customerRepository: CustomerRepository,
     private val userDetails: UserDetailsCustomService,
     private val jwtUtil: JwtUtil
@@ -54,6 +56,7 @@ class SecurityConfig(
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http.exceptionHandling().authenticationEntryPoint(customAuthentication)
     }
 
     override fun configure(web: WebSecurity) {
