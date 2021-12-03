@@ -2,16 +2,10 @@ server:
   port: 8081
 
 spring:
+  profiles:
+    active: dev
   jpa:
     hibernate:
       ddl-auto: update
-  datasource:
-    url: jdbc:mysql://localhost:3306/bookmarket?createDatabaseIfNotExist=true
-    username: root
-    password: bookmarketKT
   jackson:
     default-property-inclusion: non_null
-
-jwt:
-  secret: c6166cf5-612a-41c3-94f8-b12515e1a4dd
-  expiration: 999999

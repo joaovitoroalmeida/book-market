@@ -3,17 +3,20 @@ package com.bookmarket.controller
 import com.bookmarket.controller.request.CustomerRequest
 import com.bookmarket.controller.response.BookResponse
 import com.bookmarket.controller.response.CustomerResponse
+import com.bookmarket.controller.response.PageResponse
 import com.bookmarket.controller.response.PurchaseResponse
 import com.bookmarket.extension.toCustomerModel
+import com.bookmarket.extension.toPageResponse
 import com.bookmarket.extension.toResponse
 import com.bookmarket.security.UserCanOnlyAccessThenOwnResource
 import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
 import com.bookmarket.service.PurchaseService
-import org.springframework.data.domain.Page
+import javax.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -24,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
-import org.springframework.security.access.prepost.PreAuthorize
 
 @RestController
 @RequestMapping("customers")
@@ -58,14 +59,14 @@ class CustomerController(
 
     @GetMapping("{id}/sold_books")
     @PreAuthorize(CONDITION_AUTHORIZE)
-    fun findSoldBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<BookResponse> {
-        return bookService.findSoldBooksByCustomerId(id, pageable).map { it.toResponse() }
+    fun findSoldBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): PageResponse<BookResponse> {
+        return bookService.findSoldBooksByCustomerId(id, pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @GetMapping("{id}/purchased_books")
     @PreAuthorize(CONDITION_AUTHORIZE)
-    fun findPurchasedBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): Page<PurchaseResponse> {
-        return purchaseService.findPurchasedBooksByCustomerId(id, pageable).map { it.toResponse() }
+    fun findPurchasedBooks(@PathVariable id: Int, @PageableDefault(page = 0, size = 5) pageable: Pageable): PageResponse<PurchaseResponse> {
+        return purchaseService.findPurchasedBooksByCustomerId(id, pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @PutMapping("{id}")
