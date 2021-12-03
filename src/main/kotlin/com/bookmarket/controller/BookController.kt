@@ -2,11 +2,13 @@ package com.bookmarket.controller
 
 import com.bookmarket.controller.request.BookRequest
 import com.bookmarket.controller.response.BookResponse
+import com.bookmarket.controller.response.PageResponse
 import com.bookmarket.extension.toBookModel
+import com.bookmarket.extension.toPageResponse
 import com.bookmarket.extension.toResponse
 import com.bookmarket.service.BookService
 import com.bookmarket.service.CustomerService
-import org.springframework.data.domain.Page
+import javax.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("books")
@@ -36,13 +37,13 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
-        bookService.findAll(pageable).map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> =
+        bookService.findAll(pageable).map { it.toResponse() }.toPageResponse()
 
 
     @GetMapping("active")
-    fun findActivesBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
-        bookService.findActives(pageable).map { it.toResponse() }
+    fun findActivesBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> =
+        bookService.findActives(pageable).map { it.toResponse() }.toPageResponse()
 
     @GetMapping("{id}")
     fun findBookById(@PathVariable id: Int) : BookResponse {

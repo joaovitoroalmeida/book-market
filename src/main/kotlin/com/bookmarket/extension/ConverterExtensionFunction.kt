@@ -4,12 +4,14 @@ import com.bookmarket.controller.request.BookRequest
 import com.bookmarket.controller.request.CustomerRequest
 import com.bookmarket.controller.response.BookResponse
 import com.bookmarket.controller.response.CustomerResponse
+import com.bookmarket.controller.response.PageResponse
 import com.bookmarket.controller.response.PurchaseResponse
 import com.bookmarket.enums.BookStatus
 import com.bookmarket.enums.CustomerStatus
 import com.bookmarket.model.BookModel
 import com.bookmarket.model.CustomerModel
 import com.bookmarket.model.PurchaseModel
+import org.springframework.data.domain.Page
 
 fun CustomerRequest.toCustomerModel(): CustomerModel{
     return CustomerModel(
@@ -70,3 +72,11 @@ fun PurchaseModel.toResponse(): PurchaseResponse {
         price = this.price
     )
 }
+
+fun <T> Page<T>.toPageResponse(): PageResponse<T> =
+    PageResponse(
+        this.content,
+        this.number,
+        this.totalElements,
+        this.totalPages
+    )

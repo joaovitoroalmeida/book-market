@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookmarket?createDatabaseIfNotExist=true
+    username: root
+    password: bookmarketKT
+
+jwt:
+  secret: c6166cf5-612a-41c3-94f8-b12515e1a4dd
+  expiration: 999999
