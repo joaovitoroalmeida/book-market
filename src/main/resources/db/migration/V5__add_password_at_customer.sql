@@ -1,1 +1,1 @@
-alter table customer add column password varchar(255)
+alter table bookmarket.customer add column password varchar(255)

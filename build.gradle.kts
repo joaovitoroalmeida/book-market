@@ -43,6 +43,9 @@ dependencies {
 
 	//Tests Dependency
 	testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
+	testImplementation("io.mockk:mockk:1.12.1")
+	testImplementation("org.springframework.security:spring-security-test:5.6.0")
+	testImplementation("com.h2database:h2:1.4.200")
 }
 
 tasks.withType<KotlinCompile> {
