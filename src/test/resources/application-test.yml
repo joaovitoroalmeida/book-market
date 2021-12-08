@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:bookmarket;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE;MODE=MYSQL;DATABASE_TO_UPPER=false;INIT=CREATE SCHEMA IF NOT EXISTS bookmarket
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    default-property-inclusion: non_ null
+
+jwt:
+  secret: 2c57cf3a-c804-4dc5-8cd4-93b8d8581948
+  expiration: 999999

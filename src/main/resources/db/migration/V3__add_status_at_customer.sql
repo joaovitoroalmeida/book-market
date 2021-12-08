@@ -1,1 +1,1 @@
-alter table customer add column status varchar(100);
+alter table bookmarket.customer add column status varchar(100);
